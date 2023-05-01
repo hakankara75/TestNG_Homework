@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<!--Name: Suite ismi, Verbose: Bilgi miktarı -->
+<!--1.Test -->
+<suite name="Positive Login - Data Provider" verbose="1" >
+    <test name="Positive Login" >
+        <classes>
+            <class name="homework.tests.day24_Properties_Pages.SmokeTest.PositiveTest" />
+        </classes>
+    </test>
+    <!--2.Test -->
+    <!--Classlar farklı seviyelerde olduğu için 2 farklı test seviyesi kullanıyorum -->
+    <test name="DataProvider Test">
+        <classes>
+            <class name="homework.tests.day26_DataProvider.C02_DataProviderTest2"/>
+        </classes>
+    </test>
+</suite>
