@@ -10,24 +10,31 @@ public class BlueRentalPage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
-    @FindBy(xpath = "(//*[@role='button'])[1]")
+    @FindBy(xpath = "//a[@href='/login']")
     public WebElement login;
     @FindBy(xpath = "//*[@id='formBasicEmail']")
     public WebElement email;
-    @FindBy(id = "dropdown-basic-button")
+    @FindBy(xpath = "//*[@id='formBasicPassword']")
+    public WebElement password;
+    @FindBy(xpath = "//div[@class='dropdown']")
     public WebElement verify;
+    @FindBy(xpath = "//button[text()=' Login']")
+    public WebElement loginButton;
     @FindBy(xpath = "(//div[@class='invalid-feedback'])[1]")
     public WebElement hataMesaji;
-    @FindBy(xpath = "//div[text()='Bad credentials']")
+    @FindBy(xpath = "//div[text()='User with email fake@bluerentalcars.com not found']")
     public WebElement hataMesaji2;
+    @FindBy(id = "liwn3e6e5")
+    public WebElement uyeGirisiHataMesaji;
+
     @FindBy(id = "dropdown-basic-button")
     public WebElement logOut1;
     @FindBy(xpath = "//a[text()='Logout']")
     public WebElement logOut2;
 
-    @FindBy(xpath = "//option[text()='Select a car']")
+    @FindBy(name = "car")
     public WebElement selectACar;
-    @FindBy(xpath = "(//input[@placeholder='Select a place'])[1]")
+    @FindBy(name = "pickUpLocation")
     public WebElement pickUp;
 
     @FindBy(xpath = "(//input[@placeholder='Select a place'])[2]")

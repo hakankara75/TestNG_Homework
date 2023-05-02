@@ -1,6 +1,8 @@
 package homework.tests.day01;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 import homework.pages.BlueRentalPage;
 import homework.utilities.ConfigReader;
@@ -9,12 +11,12 @@ import homework.utilities.ReusableMethods;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
 public class C02_Odev {
 
 
-
-        @Test
-        public void testName() {
+    @Test
+    public void testName() {
 /*
         Description:
         Kullanimda olmayan kullanıcı adi ve şifre ile giriş yapılamamalı
@@ -26,19 +28,20 @@ public class C02_Odev {
         Customer email: jack@gmail.com
         Customer password: fakepass
 */
-            //sayfaya gidelim
-            Driver.getDriver().get(ConfigReader.getProperty("blue_Url"));
-            BlueRentalPage blueRentalPage = new BlueRentalPage();
+        //sayfaya gidelim
+        Driver.getDriver().get(ConfigReader.getProperty("blue_Url"));
+        BlueRentalPage blueRentalPage = new BlueRentalPage();
 
-            //login olalim
-            blueRentalPage.login.click();
-            blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_Email"),
-                    Keys.TAB, ConfigReader.getProperty("blueRentAcar_Password"), Keys.ENTER);
-            ReusableMethods.bekle(3);
-            assertTrue(blueRentalPage.hataMesaji2.getText().equals("Bad credentials"));
-        }
-        @Test
-        public void testName2() {
+        //login olalim
+        blueRentalPage.login.click();
+        blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_Email"),
+                Keys.TAB, ConfigReader.getProperty("blueRentAcar_Password"), Keys.ENTER);
+        ReusableMethods.bekle(3);
+        assertTrue(blueRentalPage.hataMesaji2.getText().equals("Bad credentials"));
+    }
+
+    @Test
+    public void testName2() {
 /*
 ODEV-2
 Description:
@@ -51,26 +54,24 @@ https://email-verify.my-addr.com/list-of-most-popularemail-
 domains.php
 User Story 4
 */
-            Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
-            BlueRentalPage blueRentalPage = new BlueRentalPage();
-            blueRentalPage.login.click();
-            blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_FakeEmail"),
-                    Keys.TAB, ConfigReader.getProperty("blueRentAcar_Password"), Keys.ENTER);
-            ReusableMethods.bekle(3);
-            assertTrue(blueRentalPage.hataMesaji.getText().contains("email must be a valid email"));
-            Driver.closeDriver();
 
-            Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
-            blueRentalPage = new BlueRentalPage();
-            blueRentalPage.login.click();
-            blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_Email"),
-                    Keys.TAB, ConfigReader.getProperty("blueRentAcar_Password"), Keys.ENTER);
-            ReusableMethods.bekle(3);
-            assertTrue(blueRentalPage.verify.getText().contains("Sam Walker"));
-            Driver.closeDriver();
-        }
-@Test
-public void testName3() {
+        Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
+        BlueRentalPage blueRentalPage = new BlueRentalPage();
+        blueRentalPage.login.click();
+
+        blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_FakeEmail"),
+                Keys.TAB, ConfigReader.getProperty("blueRentAcar_FakePassword"), Keys.ENTER);
+        ReusableMethods.bekle(3);
+
+        assertTrue(blueRentalPage.hataMesaji2.getText().contains("User with email fake@bluerentalcars.com not found"));
+        ReusableMethods.bekle(3);
+
+        Driver.closeDriver();
+
+    }
+
+    @Test
+    public void testName3() {
              /*   ODEV-3
 Description:
 Geçerli giriş yapmadan rezervasyon yapamamalı
@@ -81,47 +82,61 @@ Hata mesaji almali : Please first login
 Giris yapildiginda hata mesaji alınmamalı
 User Story 5
      */
-    //"https://www.bluerentalcars.com/" adresine git
-    Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
-    BlueRentalPage blueRentalPage = new BlueRentalPage();
-    ReusableMethods.visibleWait(blueRentalPage.login, 15);
+     //   "https://www.bluerentalcars.com/" adresine git
+        Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
+        BlueRentalPage blueRentalPage = new BlueRentalPage();
+//    ReusableMethods.visibleWait(blueRentalPage.login, 15);
 
-    //"Select a car" dan bir arac sec
-    WebElement selectCar= blueRentalPage.selectACar;
-    selectCar.click();
-    ReusableMethods.ddmValue(selectCar,"11");
-      ReusableMethods.bekle(3);
+        //"Select a car" dan bir arac sec
+        WebElement selectACar = blueRentalPage.selectACar;
+        blueRentalPage.selectACar.click();
+        Select select = new Select(selectACar);
+        select.selectByValue("2");
+        ReusableMethods.bekle(3);
 
-    //bilgileri doldur
-    blueRentalPage.pickUp.sendKeys("Ankara", Keys.ENTER);
-    blueRentalPage.dropOff.sendKeys("İstanbul", Keys.ENTER);
-    blueRentalPage.pickUpDate.sendKeys("01.01.2023", Keys.ENTER);
-    blueRentalPage.pickUpTime.sendKeys("08:00", Keys.ENTER);
-    ReusableMethods.bekle(3);
-    blueRentalPage.dropOffDate.sendKeys("05.01.2023", Keys.ENTER);
-    blueRentalPage.dropOffTime.sendKeys("08:00", Keys.ENTER);
-    ReusableMethods.bekle(3);
 
-    //"continue reservation" butonunu tikla
-    blueRentalPage.continueButton.click();
-    ReusableMethods.bekle(3);
+        blueRentalPage.pickUp.sendKeys("Istanbul", Keys.TAB, "Ardahan", Keys.TAB, "02.05.2023", Keys.TAB,
+                "08:00", Keys.TAB, "11.02.2023", Keys.TAB, "11:00", Keys.ENTER);
+        //bilgileri doldur 2. secenek
+//    blueRentalPage.pickUp.sendKeys("Ankara", Keys.ENTER);
+//    blueRentalPage.dropOff.sendKeys("İstanbul", Keys.ENTER);
+//    blueRentalPage.pickUpDate.sendKeys("01.01.2023", Keys.ENTER);
+//    blueRentalPage.pickUpTime.sendKeys("08:00", Keys.ENTER);
+//    ReusableMethods.bekle(3);
+//    blueRentalPage.dropOffDate.sendKeys("05.01.2023", Keys.ENTER);
+//    blueRentalPage.dropOffTime.sendKeys("08:00", Keys.ENTER);
+        ReusableMethods.bekle(1);
 
-    //hata mesajı alındığını dogrula
-    assertTrue(blueRentalPage.errorMessage.isDisplayed());
-    Driver.closeDriver();
+        //hata mesajı alındığını dogrula
+        assertTrue(blueRentalPage.errorMessage.isDisplayed());
+        Driver.closeDriver();
 
-    //sayfaya gidelim
-    Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
-    BlueRentalPage blueRentalPage = new BlueRentalPage();
 
-    //login olalim
-    blueRentalPage.login.click();
-    blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_Email"),
-            Keys.TAB, ConfigReader.getProperty("blueRentAcar_Password"), Keys.ENTER);
-    ReusableMethods.bekle(3);
-    assertTrue(blueRentalPage.verify.getText().equals("Sam Walker"));
-    Driver.closeDriver();
+        Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
+        blueRentalPage = new BlueRentalPage();
+        ReusableMethods.bekle(2);
+        blueRentalPage.login.click();
+        blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_Email"),
+                Keys.ENTER);
+        blueRentalPage.password.sendKeys(ConfigReader.getProperty("blueRentAcar_Password"), Keys.ENTER);
 
-}
+        ReusableMethods.bekle(3);
+        assertTrue(blueRentalPage.verify.isDisplayed());
+        Driver.closeDriver();
+
+
+        //sayfaya gidelim
+        Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
+        blueRentalPage = new BlueRentalPage();
+
+        //login olalim
+        blueRentalPage.login.click();
+        blueRentalPage.email.sendKeys(ConfigReader.getProperty("blueRentAcar_Email"),
+                Keys.TAB, ConfigReader.getProperty("blueRentAcar_Password"), Keys.ENTER);
+        ReusableMethods.bekle(3);
+        assertTrue(blueRentalPage.verify.getText().equals("Sam Walker"));
+        Driver.closeDriver();
+
     }
+}
 
