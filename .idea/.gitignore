@@ -1,3 +1,36 @@
 # Default ignored files
-/shelf/
+/configuration.properties
+/target/
+/TestOutput/
 /workspace.xml
+/.idea/
+# Build files
+*.o
+*.obj
+*.exe
+*.dll
+
+# Config files
+*.config
+*.ini
+
+# Log files
+*.log
+
+# SQLite database files
+*.sqlite
+*.db
+
+# IDE-specific files
+.idea/
+.vscode/
+
+
+# Downloaded files
+*.zip
+*.tar.gz
+
+# Miscellaneous files
+*.pdf
+*.doc
+*.jpg
