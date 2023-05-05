@@ -1,13 +1,14 @@
 package homework.tests.day02;
 
+import homework.pages.AutomationExcerciseNK;
+import homework.utilities.ConfigReader;
+import homework.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
-import pages.AutomationExcerciseNK;
-import utilities.ConfigReader;
-import utilities.Driver;
+
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class task20 {
 
     @Test
     public void task20() throws InterruptedException {
-            AutomationExcerciseNK automationExcerciseNK = new AutomationExcerciseNK();
+        AutomationExcerciseNK automationExcerciseNK = new AutomationExcerciseNK();
 //        2. Navigate to url 'http://automationexercise.com'
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 

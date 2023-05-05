@@ -1,5 +1,6 @@
 package homework.utilities;
 
+import com.github.javafaker.Faker;
 import org.testng.annotations.DataProvider;
 
 public class DataProviderUtils {
@@ -11,6 +12,19 @@ public class DataProviderUtils {
 
     }
 
+    @DataProvider
+    public Object[][] faker() {
+        String email ="";
+        String password ="";
+        for (int i = 0; i < 5; i++) {
+            Faker faker = new Faker();
+             email = faker.internet().emailAddress();
+             password = faker.internet().password();
+
+        }
+        return new Object[][]{{email, password}, {email, password},
+                {email, password}, {email, password}, {email, password}};
+    }
     @DataProvider
     public Object[][] kullaniciBilgileri(){
 

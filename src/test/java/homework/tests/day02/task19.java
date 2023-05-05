@@ -1,11 +1,12 @@
 package homework.tests.day02;
 
 
+import homework.pages.AutomationExcerciseNK;
+import homework.utilities.ConfigReader;
+import homework.utilities.Driver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
-import pages.AutomationExcerciseNK;
-import utilities.ConfigReader;
-import utilities.Driver;
+
 
 import static org.testng.Assert.assertTrue;
 
