@@ -51,5 +51,6 @@ assertTrue(automationExcerciseNK.polo.isDisplayed());
 //        8. Verify that user is navigated to that brand page and can see products
         assertTrue(automationExcerciseNK.kookieKidsText.isDisplayed());
 
+        Driver.closeDriver();
     }
 }

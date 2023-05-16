@@ -91,5 +91,6 @@ Thread.sleep(2000);
         for (WebElement element : elements) {
             assertTrue(element.isDisplayed());
         }
+        Driver.closeDriver();
     }
 }

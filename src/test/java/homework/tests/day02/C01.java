@@ -54,6 +54,6 @@ public class C01 {
 
 //        Finally print on console this message "Hello BootcampCamp How are you today" assertion these message.
        assertTrue(automationtesting.alertTextMessage.isDisplayed());
-
+        Driver.closeDriver();
     }
 }

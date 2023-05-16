@@ -58,6 +58,6 @@ New Tab butonunun görünür olduğunu doğrula
 
 ////New Tab butonunun görünür olduğunu doğrula
         TestBase.assertDisplayedWebelement("//button[@id='tabButton']");
-
+        Driver.closeDriver();
     }
 }
