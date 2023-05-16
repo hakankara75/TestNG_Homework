@@ -9,6 +9,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.AssertJUnit;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static org.testng.Assert.assertTrue;
 
@@ -69,24 +72,11 @@ public class ReusableMethods {
     }
 
 
-    //Alert ACCEPT
-    public static void alertAccept() {
-        Driver.getDriver().switchTo().alert().accept();
-    }
-
-    //Alert DISMISS
-    public static void alertDismiss() {
-        Driver.getDriver().switchTo().alert().dismiss();
-    }
-
-    //Alert getText()
+    /**
+     bu metot ile alert deki metin alinir
+     */
     public static void alertText() {
         Driver.getDriver().switchTo().alert().getText();
-    }
-
-    //Alert promptBox
-    public static void alertprompt(String text) {
-        Driver.getDriver().switchTo().alert().sendKeys(text);
     }
 
     //DropDown VisibleText
@@ -95,54 +85,92 @@ public class ReusableMethods {
         select2.selectByVisibleText("7");
         //ddmVisibleText(gun,"7"); --> Yukarıdaki kullanım yerine sadece method ile handle edebilirim
      */
+
+    /** Bu metot xpath ile alinan locate sendkey gonderir
+     * @param xPath buraya elementin xpath locati verilecek
+     * @param sendKeys buraya elemente dongerilecek metin girilecek
+     */
+    public void webElementSendKeys(String xPath, String sendKeys){
+        Driver.getDriver().findElement(By.xpath(xPath)).sendKeys(sendKeys);
+
+    }
+
+    /**
+     bu metot ile dropdown menude yazan bir text secilir
+     @param ddm girilmesi gereken menunun locatidir
+     @param secenek dropdown menunde yazan gorun textin string halidir
+     */
     public static void ddmVisibleText(WebElement ddm, String secenek) {
         Select select = new Select(ddm);
         select.selectByVisibleText(secenek);
     }
 
-    //DropDown Index
+    /**
+     bu metot ile dropdown menudeki seceneklerden birisi index ile secilir
+     @param ddm girilmesi gereken menunun locatidir
+     @param index dropdown menunde yazan index numarasidir
+     */
     public static void ddmIndex(WebElement ddm, int index) {
         Select select = new Select(ddm);
         select.selectByIndex(index);
     }
-
-    //DropDown Value
+    /**
+     bu metot ile dropdown menudeki valued seceneklerinden birisi strin gonderilerek secilir
+     @paramType ddm girilmesi gereken menunun locatidir
+     @paramType secenek dropdown menunde yazan ve girilmesi gereken value nun string halidir
+     */
     public static void ddmValue(WebElement ddm, String secenek) {
         Select select = new Select(ddm);
         select.selectByValue(secenek);
     }
 
-    //SwitchToWindow1
+    /**
+     bu metot ile acilan ilk pencereye donulur
+     @param sayi girilmesi gereken gecilecek pencerenin indexidir
+     */
     public static void switchToWindow1(int sayi) {
         List<String> tumWindowHandles = new ArrayList<String>(Driver.getDriver().getWindowHandles());
         Driver.getDriver().switchTo().window(tumWindowHandles.get(sayi));
     }
 
-    //SwitchToWindow2
+    /**
+     bu metot ile acilan pencereye gecilir
+     @param sayi girilmesi gereken gecilecek pencerenin indexidir
+     */
     public static void switchToWindow2(int sayi) {
         Driver.getDriver().switchTo().window(Driver.getDriver().getWindowHandles().toArray()[sayi].toString());
     }
 
-    //EXPLICIT WAIT METHODS
-    //Visible Wait
+    /**
+     * Explicit wait yapar
+     bu metot ile bir element gorulene kadar kodlar bekletilir
+     @param element girilmesi gereken locate dir
+     @param sayi girilmesi gereken saniyedir
+     */
     public static void visibleWait(WebElement element, int sayi) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(sayi));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
-
-    //VisibleElementLocator Wait
+    /**
+     bu metot ile bir element gorulene kadar kodlar bekletme suresi return eder
+     @param locator girilmesi gereken locate dir
+     @param locator girilmesi gereken saniyedir
+     */
     public static WebElement visibleWait(By locator, int sayi) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(sayi));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-
-    //Alert Wait
+    /**
+     bu metot ile alert gorulene kadar kodlar bekletilir
+     @param sayi girilmesi gereken saniyedir
+     */
     public static void alertWait(int sayi) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(sayi));
         wait.until(ExpectedConditions.alertIsPresent());
     }
-
-    //Tüm Sayfa ScreenShot
+    /**
+     bu metot ile tum sayfanin screenshot i alinir
+     */
     public static void tumSayfaScreenShoot() {
         String tarih = new SimpleDateFormat("_hh_mm_ss_ddMMyyyy").format(new Date());
         String dosyaYolu = "TestOutput/screenshot" + tarih + ".png";
@@ -153,8 +181,10 @@ public class ReusableMethods {
             throw new RuntimeException(e);
         }
     }
-
-    //WebElement ScreenShot
+    /**
+     bu metot ile webelementin screenshot i alinir
+     @param element girilmesi gereken locate dir
+     */
     public static void webElementScreenShoot(WebElement element) {
         String tarih = new SimpleDateFormat("_hh_mm_ss_ddMMyyyy").format(new Date());
         String dosyaYolu = "TestOutput/webElementScreenshot" + tarih + ".png";
@@ -164,14 +194,19 @@ public class ReusableMethods {
             throw new RuntimeException(e);
         }
     }
-
-    //mause element ustunde bekletilir
+    /**
+     bu metot ile mause element ustunde bekletilir
+     @param webElement girilmesi gereken locate dir
+     */
     public static void moveToElement(WebElement webElement) {
         Actions actions = new Actions(Driver.getDriver());
         actions.moveToElement(webElement).perform();
     }
 
-    //bu metot ile herhangi bir webelemente JavascriptExecutor kullanarak tiklayabilirim
+    /**
+     bu metot ile herhangi bir webelemente JavascriptExecutor kullanarak tiklayabilirim
+     @param webElement girilmesi gereken locate dir
+     */
     public static void clickByJavaScript(WebElement webElement) {
         JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
 
@@ -179,32 +214,45 @@ public class ReusableMethods {
 
     }
 
-    //elementin ustune JavascriptExecutor ile goturur
+    /**
+     * bu metot elementin ustune JavascriptExecutor ile goturur
+     @param webElement girilmesi gereken locate dir
+     */
     public static void scrollIntoViewByJavaScript(WebElement webElement) {
         JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();//Casting
         jse.executeScript("arguments[0].scrollIntoView(true);", webElement);
 
     }
 
-    //bu metot JavascriptExecutor ile sayfayi en alta kaydirabilirim
-    public static void scrollEndByJavaScript() {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-    }
-
-    //bu metot JavascriptExecutor ile sayfayi en yukari kaydirabilirim
-    public static void scrollTopByJavaScript() {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
-    }
-
-    //elemente JavascriptExecutor ile string gonderir(java sendkey() ile ayni)
+    /**
+     * bu metot javascript kodu ile elemente string gonderir(java sendkey() ile ayni)
+     @param webElement girilmesi gereken locate dir
+     @param string locate gonderilecek olan deger
+     */
     public static void sendKeyWithJavaScript(String string, WebElement webElement) {
         JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();//Casting
         jse.executeScript("arguments[0].value = '"+string+"';", webElement);
 
     }
-    //bu kod locati alinan elemana kadar sayfayi asagi goturur
+    /**
+     bu metot javascript kodu ile sayfayi en alta goturur
+     */
+    public static void scrollEndByJavaScript() {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+    }
+
+    /**
+     bu metot javascript kodu ile sayfayi en yukari goturur
+     */
+    public static void scrollTopByJavaScript() {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+    }
+
+    /**bu metot sayfayi girilen string degerindeki elemente goturur
+     * @param str girilmesi gereken elementin locatinin string halidir
+     */
     public static void scrollToElementWithString(String str) {
         WebElement bottom = Driver.getDriver().findElement(By.xpath(str));
         Actions actions = new Actions(Driver.getDriver());
@@ -212,14 +260,20 @@ public class ReusableMethods {
 
     }
 
-    //bu kod locati alinan elemana kadar sayfayi asagi goturur
+    /**
+     * @param element girilmesi gereken locatidir
+    bu metot sayfayi girilen elemente goturur
+     */
     public static void scrollToElementWithWebElement(WebElement element) {
         WebElement bottom = element;
         Actions actions = new Actions(Driver.getDriver());
         actions.scrollToElement(bottom).perform();
-
     }
 
+    /**
+     * @param sleep girilmesi gereken saniye
+    bu metot girilen saniye kadar java kodlarini bekletir
+     */
     public static void threadSleep(int sleep) {
         try {
             Thread.sleep(sleep * 1000);
@@ -228,66 +282,123 @@ public class ReusableMethods {
         }
     }
 
-
+    /**
+     * @param str degeri expected metin
+     * @param atr degeri actual metin
+    bu metot expected metinin alertteki actual metini icerdigini dogrulamak icin
+     */
     public static void assertTextContainsAssertTrue(String str, String atr) {
         assertTrue(str.contains(atr));
     }
 
+    /**Bu metot bir webelementin secili olup olmadigini dogrular
+     *  @param webElement girilecek webelement dir.
+     */
+    public void assertTrueIsSelected(WebElement webElement){
+        Assert.assertTrue(webElement.isSelected());
+    }
+
+    /** Bu metot iki string degerin birbirine equal olup olmadigini dogrular
+     @param str girilecek 1. metindir
+     @param str1 girilecek 2. metindir
+     */
+    public void assertTrueEquals(String str, String str1){
+        Assert.assertTrue(str.equals(str1));
+    }
+
+    /**
+     bu metot alerti kabul eder
+     */
     public static void switchAlertAccept() {
         Driver.getDriver().switchTo().alert().accept();
     }
 
+    /**
+     bu metot alerti reddeder
+     */
     public static void switchAlertDismiss() {
         Driver.getDriver().switchTo().alert().dismiss();
     }
 
+    /**
+     * @param str olarak alerte gonderilecek metin girilmeli
+    bu metot girilen metini alerte mesaj olarak gonderir
+     */
     public static void switchAlertSendKey(String str) {
         Driver.getDriver().switchTo().alert().sendKeys(str);
     }
 
+    /**
+     * @param str olarak xpath locati girilmeli
+    bu metot girilen xpath locati ile webelement olusturur
+     */
     public static String findByXpathString(String str) {
         String location = Driver.getDriver().findElement(By.xpath(str)).getText();
         return location;
     }
 
-
+    /** bu metot girilen id locati ile webelement olusturur
+     * @param str olarak id locati girilmeli
+     */
     public static WebElement findByIdWebelement(String str) {
         WebElement w = Driver.getDriver().findElement(By.id(str));
         return w;
     }
 
+    /**
+     bu metot ekrani bir masue tekeri donmesi kadar asagi kaydirir
+     */
     public static void pageDown() {
         Actions actions = new Actions(Driver.getDriver());
         actions.sendKeys(Keys.PAGE_DOWN).perform();
     }
 
+    /**
+     bu metot ekrani bir masue tekeri donmesi kadar yukari kaydirir
+     */
     public static void pageUp() {
         Actions actions = new Actions(Driver.getDriver());
         actions.sendKeys(Keys.PAGE_UP).perform();
     }
 
+    /**
+     bu metot ekrani bir tik asagi kaydirir
+     */
     public static void arrowDown() {
         Actions actions = new Actions(Driver.getDriver());
         actions.sendKeys(Keys.ARROW_DOWN).perform();
     }
 
+    /**
+     bu metot ekrani bir tik yukari kaydirir
+     */
     public static void arrowUp() {
         Actions actions = new Actions(Driver.getDriver());
         actions.sendKeys(Keys.ARROW_UP).perform();
     }
 
-
-    public static void assertDisplayedWebelement(WebElement a) {
-        assertTrue(a.isDisplayed());
+    /** bu metot webelementin gorunur oldugunu dogrulamak icindir
+     @param  webElement girilecek olan webelementdir
+     */
+    public static void assertTrueIsDisplayed(WebElement webElement) {
+        assertTrue(webElement.isDisplayed());
     }
 
-    //search boxa sendkeys gonderir
-    public static void typeWithJavaScript(WebElement webElement, String str) {
+    /**
+     @param  webElement girilmesi gereken element locati
+     @param str gonderilmek istenen metin
+      *bu metot ile metin kutusuna sendkeys gonderir
+     */
+    public static void sendAttributeJavaScript(WebElement webElement, String str) {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("arguments[0].setAttribute('value', '" + str + "')", webElement);
     }
 
-    //bu metot ile attribute degerleri ile texti alabilirim
+    /**
+     @param id girilmesi gereken id degeri
+     @param attributeName gonderilmesi gereken attribute ismi
+     bu metot ile girilen attribute degerleri ile texti alabilirim
+     */
     public static void getValueByJavaScript(String id, String attributeName) {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         String string = js.executeScript("return document.getElementById('" + id + "')." + attributeName + "").toString();
@@ -297,4 +408,66 @@ public class ReusableMethods {
 //             document.querySelector("#example").value; -> CSS DEGERI KULLANILABILIR
     }
 
+    /**
+     *  JavaScript ile webelement olusturma
+     * @param javascriptYolu internet sitesinden sag klik ile JS yolunu kopyala ile alınan metin olacak
+     */
+
+    public static WebElement webelementJavaScript(String javascriptYolu) {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        WebElement webElement = (WebElement) js.executeScript("return "+javascriptYolu+"");
+        return webElement;
+    }
+
+    /**
+     *  JavaScript ile webelement olusturup isEnabled oldugunu sorgulama
+     * @param str internet sitesinden sag klik ile JS yolunu kopyala ile alınan metin olacak
+     */
+    public static void assertIsEnabled(String str){
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        WebElement webElement = (WebElement) js.executeScript("return "+str+"");
+        AssertJUnit.assertTrue(webElement.isEnabled());
+    }
+
+    /**
+     *  JavaScript ile cift klik yapma
+     * @param element ile locate verilir
+     */
+    public static void doubleClick (WebElement element){
+        Actions actions=new Actions(Driver.getDriver());
+        actions.doubleClick(element).perform();
+    }
+
+
+    /**bu metot search boxa sendkeys gonderir
+     * @param webElement girilmesi gereken element dir
+     * @param str sendkey ile gonderilmek istenen metindir
+     */
+    public static void typeWithJavaScript(WebElement webElement, String str) {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("arguments[0].setAttribute('value', '" + str + "')", webElement);
+    }
+
+
+    /**
+     * Bu metot ile pencere degistirilir. ikinci pencereye gecilir.
+     * @param firstPage parametresine ilk pencerenin handle degeri girilir.
+     */
+
+    public void switchToHandle( String firstPage){
+        firstPage=Driver.getDriver().getWindowHandle();
+        Set<String> pagesHandles=Driver.getDriver().getWindowHandles();
+        for (String str: pagesHandles){
+            if(!str.equals(firstPage)){
+                Driver.getDriver().switchTo().window(str);
+
+            }
+        }
+
+    }
+    //*[contains(@name,'q')]
+    //*[contains(@title,'Ara')]
+    //*[contains(@maxlength,'2048')]
+    //*[contains(@maxlength,'20')]
+    // * [cointains ( @Attribute = ’Value’) ]
 }
