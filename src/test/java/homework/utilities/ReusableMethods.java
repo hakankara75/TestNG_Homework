@@ -143,15 +143,6 @@ public class ReusableMethods {
 
     /**
      * Explicit wait yapar
-     bu metot ile bir element gorulene kadar kodlar bekletilir
-     @param element girilmesi gereken locate dir
-     @param sayi girilmesi gereken saniyedir
-     */
-    public static void visibleWait(WebElement element, int sayi) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(sayi));
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-    /**
      bu metot ile bir element gorulene kadar kodlar bekletme suresi return eder
      @param locator girilmesi gereken locate dir
      @param locator girilmesi gereken saniyedir

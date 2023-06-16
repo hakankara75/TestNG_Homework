@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static org.testng.AssertJUnit.assertTrue;
+
 public class C02 {
     @Test
     public void testName() {
@@ -36,28 +38,28 @@ New Tab butonunun görünür olduğunu doğrula
         demoqa.alertsFrameWindows.click();
 
 //""Please select an item from left to start practice."" yazısının görünür olduğunu doğrula
-        TestBase.assertDisplayedWebelement("//div[text()='Please select an item from left to start practice.']");
+       assertTrue(Driver.getDriver().findElement(By.xpath("//div[text()='Please select an item from left to start practice.']")).isDisplayed());
 
 //Sol'da açılan Menu den ""Browser Windows"" butonuna click yap
         TestBase.threadSleep(2);
         demoqa.browserWindows.click();
 
 //New Tab butonunun görünür olduğunu doğrula
-        TestBase.assertDisplayedWebelement("//button[@id='tabButton']");
+        assertTrue(Driver.getDriver().findElement(By.xpath("//button[@id='tabButton']")).isDisplayed());
 
 //New Tab butonuna click yap
         demoqa.newTab.click();
 
 //Açılan yeni Tab da ""This is a sample page"" yazısının görünür olduğunu doğrula
-        TestBase.switchToWindow(1);
+        TestBase.switchToWindow1(1);
         Assert.assertTrue(Driver.getDriver().findElement(By.id("sampleHeading")).isDisplayed());
         TestBase.threadSleep(2);
 
 //İlk Tab'a geri dön
-        TestBase.switchToWindow(0);
+        TestBase.switchToWindow1(0);
 
 ////New Tab butonunun görünür olduğunu doğrula
-        TestBase.assertDisplayedWebelement("//button[@id='tabButton']");
+        assertTrue(Driver.getDriver().findElement(By.xpath("//button[@id='tabButton']")).isDisplayed());
         Driver.closeDriver();
     }
 }

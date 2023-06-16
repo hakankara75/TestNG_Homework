@@ -1,0 +1,14 @@
+Kurulum:
+LINK: https://www.selenium.dev/documentation/grid/getting_started/
+1. SeleniumServer adında bir klasör açıyoruz
+2.-Download Selenium Server : https://www.selenium.dev/downloads/
+  -Download chrome driver : https://chromedriver.chromium.org/downloads
+  -Download firefox driver : https://github.com/mozilla/geckodriver/releases
+  -Download the edge driver : https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+İndirilen bu dosyaları açtığımız klasöre kopyalıyoruz
+3. SeleniumServer klasör yolunu terminalde açıyoruz
+4.java -jar selenium-server-4.10.0.jar standalone komutunu çalıştırıyoruz
+5.http://localhost:4444 adresine gidiyoruz ve grid görünüyor
+6. RemoteWebDriver objesi ile bir driver oluşturuyoruz:
+  WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444"), new ChromeOptions());
+7. Gerisi selenium
