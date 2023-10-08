@@ -1,18 +1,23 @@
 package homework.tests.day01;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import homework.utilities.*;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import homework.pages.BlueRentalPage;
-import homework.utilities.ConfigReader;
-import homework.utilities.Driver;
-import homework.utilities.ReusableMethods;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-public class C02_Odev {
+public class C02_Odev extends TestBase {
 
 
     @Test
@@ -28,8 +33,10 @@ public class C02_Odev {
         Customer email: jack@gmail.com
         Customer password: fakepass
 */
+        String tarih = new SimpleDateFormat("_hh_mm_ss_ddMMyyyy").format(new Date());
+        ExtentReport.createInstance("TestOutput/reports/extentReport_" + tarih + ".html");
         //sayfaya gidelim
-        Driver.getDriver().get(ConfigReader.getProperty("blue_Url"));
+        Driver.getDriver().get(ConfigReader.getProperty("blueRentalAcar_Url"));
         BlueRentalPage blueRentalPage = new BlueRentalPage();
 
         //login olalim

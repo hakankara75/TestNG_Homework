@@ -1,6 +1,5 @@
 package homework.utilities;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -39,15 +38,15 @@ public class Driver {
 
             switch (ConfigReader.getProperty("browser")) {
                 case "chrome":
-                    WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver(new ChromeOptions().addArguments("--remote-allow-origins=*"));
+                    System.setProperty("webdriver.chrome.driver", "C:/Users/Hakan Batirhan.DESKTOP-KA8SOKR/Downloads/chromedriver-win64/chromedriver.exe");
+                     driver = new ChromeDriver();
                     break;
                 case "firefox":
-                    WebDriverManager.firefoxdriver().setup();
+
                     driver = new FirefoxDriver(new FirefoxOptions().addArguments("--remote-allow-origins=*"));
                     break;
                 case "edge":
-                    WebDriverManager.edgedriver().setup();
+
                     driver = new EdgeDriver(new EdgeOptions().addArguments("--remote-allow-origins=*"));
                     break;
 
