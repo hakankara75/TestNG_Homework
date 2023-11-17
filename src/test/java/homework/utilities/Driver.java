@@ -38,7 +38,7 @@ public class Driver {
 
             switch (ConfigReader.getProperty("browser")) {
                 case "chrome":
-                    System.setProperty("webdriver.chrome.driver", "C:/Users/Hakan Batirhan.DESKTOP-KA8SOKR/Downloads/chromedriver-win64/chromedriver.exe");
+                    System.setProperty("webdriver.chrome.driver", "C:\\chromedriver-win64\\chromedriver.exe");
                      driver = new ChromeDriver();
                     break;
                 case "firefox":

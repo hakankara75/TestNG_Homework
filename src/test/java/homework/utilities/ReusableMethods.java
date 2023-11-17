@@ -385,15 +385,15 @@ public class ReusableMethods {
         js.executeScript("arguments[0].setAttribute('value', '" + str + "')", webElement);
     }
 
-    /**
+    /** bu metot ile girilen attribute degerleri ile texti alabilirim
      @param id girilmesi gereken id degeri
      @param attributeName gonderilmesi gereken attribute ismi
-     bu metot ile girilen attribute degerleri ile texti alabilirim
      */
     public static void getValueByJavaScript(String id, String attributeName) {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        String string = js.executeScript("return document.getElementById('" + id + "')." + attributeName + "").toString();
+        String string = js.executeScript("return document.getElementById('" + id + "')." + attributeName).toString();
         System.out.println(string);
+
         //        NOT: document.querySelector("p").value;  -> TAG KULLANILABILIR
 //             document.querySelector(".example").value; -> CSS DEGERI KULLANILABILIR
 //             document.querySelector("#example").value; -> CSS DEGERI KULLANILABILIR
